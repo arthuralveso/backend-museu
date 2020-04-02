@@ -23,6 +23,12 @@ class UserController {
       email,
     });
   }
+
+  async index(req, res) {
+    const getUser = await User.findAll();
+
+    return res.json(getUser);
+  }
 }
 
 module.exports = new UserController();
