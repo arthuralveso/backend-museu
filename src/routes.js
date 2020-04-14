@@ -14,12 +14,15 @@ routes.get('/users', UserController.index);
 routes.put('/users/:id', UserController.update);
 routes.delete('/users/:id', UserController.delete);
 
-// ROTAS DE LOGIN
+// ROTA DE LOGIN DE USUÁRIO
 
 routes.post('/sessions', SessionController.store);
+
+// ROTA DE LOGIN PARA VISITANTES E INSERIR A DATA DE LOGIN NO BANCO DE DADOS (APENAS MOBILE)
+
 routes.post('/guestsessions', GuestSessionController.store);
 
-// ROTA PARA INSERIR A DATA DE LOGIN NO BANCO DE DADOS (APENAS MOBILE)
+// ROTA PARA LISTAR AS DATAS DE LOGIN COM O ID DO VISITANTE QUE REALIZOU O LOGIN.
 
 routes.get('/guestsessions', GuestSessionController.index);
 
