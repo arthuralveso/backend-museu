@@ -6,6 +6,7 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.0.0",
@@ -14,7 +15,8 @@
     "yup": "^0.28.3"
   },
   "scripts": {
-    "start": "nodemon src/server.js"
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
