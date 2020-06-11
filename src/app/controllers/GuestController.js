@@ -15,15 +15,21 @@ class GuestController {
       return res.status(400).json({ error: 'validation fails' });
     }
 
-    const guestExists = await Guest.findOne({
-      where: { phone_id: req.body.phone_id },
+    const guestExists = await Guest.sync({ force: true }).then(() => {
+      return Guest.findOne({
+        where: { phone_id: req.body.phone_id },
+      });
     });
 
     if (guestExists) {
       return res.status(400).json({ error: 'Guest already exists.' });
     }
 
-    const { phone_id, name, email } = await Guest.create(req.body);
+    const { phone_id, name, email } = await Guest.sync({ force: true }).then(
+      () => {
+        return Guest.create(req.body);
+      }
+    );
 
     return res.json({
       phone_id,
@@ -34,8 +40,10 @@ class GuestController {
 
   // LISTAGEM DE VISITANTES
   async index(req, res) {
-    const guest = await Guest.findAll({
-      attributes: ['phone_id', 'name', 'email'],
+    const guest = await Guest.sync({ force: true }).then(() => {
+      return Guest.findAll({
+        attributes: ['phone_id', 'name', 'email'],
+      });
     });
 
     return res.json(guest);

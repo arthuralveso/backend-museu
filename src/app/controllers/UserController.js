@@ -15,14 +15,20 @@ class UserController {
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'validation fails' });
     }
-    const userExists = await User.findOne({
-      where: { username: req.body.username },
+    const userExists = await User.sync({ force: true }).then(() => {
+      return User.findOne({
+        where: { username: req.body.username },
+      });
     });
     if (userExists) {
       return res.status(400).json({ error: 'Username already exists.' });
     }
 
-    const { id, name, username, email, provider } = await User.create(req.body);
+    const { id, name, username, email, provider } = await User.sync({
+      force: true,
+    }).then(() => {
+      return User.create(req.body);
+    });
 
     return res.json({
       id,
