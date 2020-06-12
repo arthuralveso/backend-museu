@@ -20,21 +20,17 @@ class GuestSessionController {
 
     const { guest_id } = req.body;
 
-    const guestExists = await Guest.sync({ force: true }).then(() => {
-      return Guest.findOne({
-        where: { phone_id: guest_id },
-      });
+    const guestExists = await Guest.findOne({
+      where: { phone_id: guest_id },
     });
 
     if (!guestExists) {
       res.status(500).json({ error: 'Guest do not exists' });
     }
 
-    const dates = await Dates.sync({ force: true }).then(() => {
-      return Dates.create({
-        guest_id,
-        date,
-      });
+    const dates = await Dates.create({
+      guest_id,
+      date,
     });
 
     return res.json(dates);

@@ -18,10 +18,8 @@ class BeaconController {
       return res.status(400).json({ error: 'validation fails' });
     }
 
-    const beaconExists = await Beacon.sync({ force: true }).then(() => {
-      return Beacon.findOne({
-        where: { id: req.body.id },
-      });
+    const beaconExists = await Beacon.findOne({
+      where: { id: req.body.id },
     });
     if (beaconExists) {
       return res.status(400).json({ error: 'Beacon already exists.' });
@@ -33,9 +31,7 @@ class BeaconController {
       content_description,
       content,
       content_type,
-    } = await Beacon.sync({ force: true }).then(() => {
-      return Beacon.create(req.body);
-    });
+    } = await Beacon.create(req.body);
 
     return res.json({
       id,
@@ -49,16 +45,14 @@ class BeaconController {
   // LISTAGEM DE BEACONS
 
   async index(req, res) {
-    const beacon = await Beacon.sync({ force: true }).then(() => {
-      return Beacon.findAll({
-        attributes: [
-          'id',
-          'content_name',
-          'content_description',
-          'content',
-          'content_type',
-        ],
-      });
+    const beacon = await Beacon.findAll({
+      attributes: [
+        'id',
+        'content_name',
+        'content_description',
+        'content',
+        'content_type',
+      ],
     });
 
     return res.json(beacon);
@@ -66,16 +60,14 @@ class BeaconController {
 
   // LISTAGEM DE BEACONS POR ID
   async indexById(req, res) {
-    const beacon = await Beacon.sync({ force: true }).then(() => {
-      return Beacon.findByPk(req.params.id, {
-        attributes: [
-          'id',
-          'content_name',
-          'content_description',
-          'content',
-          'content_type',
-        ],
-      });
+    const beacon = await Beacon.findByPk(req.params.id, {
+      attributes: [
+        'id',
+        'content_name',
+        'content_description',
+        'content',
+        'content_type',
+      ],
     });
 
     return res.json(beacon);
@@ -95,9 +87,7 @@ class BeaconController {
       return res.status(400).json({ error: 'validation fails' });
     }
 
-    const beacon = await Beacon.sync({ force: true }).then(() => {
-      return Beacon.findByPk(req.params.id);
-    });
+    const beacon = await Beacon.findByPk(req.params.id);
 
     if (!beacon) {
       return res.status(500).json({ error: 'Beacon do not exists' });
